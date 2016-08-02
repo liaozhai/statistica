@@ -1,0 +1,2 @@
+# statistica
+Collective Intelligence experiments
