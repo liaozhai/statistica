@@ -62,7 +62,7 @@ void test_samples (){
 	double fst[] = {0.30,2.95,0.46,3.99,2.00,1.77,0.69,4.02,3.25,3.75};
 	double** snd = read_samples ("series.txt", &cols, &rows);
 	
-	printf ("Serial #\tEuclides\tPearson\n");
+	printf ("#\tEucl\tPearson\n");
 	for (unsigned int i = 0; i < rows; ++i){
 		printf ("%d\t%.2f\t%.2f\n", i, dist(fst, snd[i], cols), pearson(fst, snd[i], cols));		
 	}
