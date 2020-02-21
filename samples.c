@@ -6,8 +6,7 @@
 #include "samples.h"
 #include "list.h"
 
-void print_row (double row[], const unsigned int count);
-void print_row (double row[], const unsigned int count){
+void print_row (const double row[], const unsigned int count){
 	printf ("[");
 	printf ("%.2f", row[0]);
 	for (unsigned int i = 1; i < count; ++i){
@@ -16,13 +15,11 @@ void print_row (double row[], const unsigned int count){
 	printf ("]");
 }
 
-int cmp (const void* a, const void* b);
 int cmp (const void* a, const void* b){
    return (*(int*)a - *(int*)b);
 }
 
-void normalize(int src[], double dst[], const size_t count, const double minscore, const double maxscore);
-void normalize(int src[], double dst[], const size_t count, const double minscore, const double maxscore){
+void normalize(const int src[], double dst[], const size_t count, const double minscore, const double maxscore){
 	int tmp[count];
 	memcpy (tmp, src, sizeof(int) * count);	
 	qsort (tmp, count, sizeof (int), cmp);

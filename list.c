@@ -5,14 +5,14 @@ List* list_append (List* head){
 	List* tail = malloc (sizeof(List));
 	tail->pnext = NULL;
 	tail->pvalue = NULL;
-	if(head != NULL){
+	if(head != NULL){		
 		head->pnext = tail;
 	}
 	return tail;
 }
 
 void list_free (List* head){
-	List* cur = head;	
+	List* cur = head;
 	while (cur != NULL){
 		List* pnext = cur->pnext;
 		free (cur->pvalue);

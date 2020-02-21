@@ -1,4 +1,4 @@
 #pragma once
 
-double dist (double* fst, double* snd, unsigned int count);
-double pearson (double* fst, double* snd, unsigned int count);
+double dist (const double* fst, const double* snd, const unsigned int count);
+double pearson (const double* fst, const double* snd, const unsigned int count);
