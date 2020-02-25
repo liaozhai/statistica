@@ -3,48 +3,48 @@
 #include "dist.h"
 #include "list.h"
 
-List* coincidences (const double* fst, const double* snd, const unsigned int count);
-List* coincidences (const double* fst, const double* snd, const unsigned int count) {
+List* coincidences (const double* fst, const double* snd, const size_t count);
+List* coincidences (const double* fst, const double* snd, const size_t count) {
 	List* lst = NULL;
 	List* cur = NULL;	
-	for (unsigned int i = 0; i < count; ++i){
+	for (size_t i = 0; i < count; ++i){
 		if (!isnan (fst[i]) && !isnan (snd[i]))	{
 			cur = list_append (cur);
 			if (lst == NULL) {
 				lst = cur;
 			}
-			cur->pvalue = malloc (sizeof(unsigned int));
-			*((unsigned int*)cur->pvalue) = i;
+			cur->value = calloc (1, sizeof(size_t));
+			*((size_t*)cur->value) = i;
 		}		
 	}	
 	return lst;	
 }
 
-double dist (const double* fst, const double* snd, const unsigned int count) {
+double dist (const double* fst, const double* snd, const size_t count) {
 	List* lst = coincidences (fst, snd, count);
-	const unsigned int len = list_length (lst);
-	unsigned int indices[len];
-	list_to_array (lst, indices, unsigned int);
+	const size_t len = list_length (lst);
+	size_t indices[len];
+	list_to_array (lst, indices, sizeof(size_t));
 	list_free (lst);
-	double s = 0.0;	
-	for (unsigned int i = 0; i < len; ++i){
-		unsigned int k = indices[i];
+	double s = 0.0;
+	for (size_t i = 0; i < len; ++i){
+		size_t k = indices[i];
 		s += pow (fst[k] - snd[k], 2.0);
 	}
 	
 	return 1 / (1 + s);
 }
 
-double pearson (const double* fst, const double* snd, const unsigned int count){
+double pearson (const double* fst, const double* snd, const size_t count){
 	List* lst = coincidences (fst, snd, count);
-	const unsigned int len = list_length (lst);
+	const size_t len = list_length (lst);
 	
 	if (len == 0) {
 		return 0.0;
 	}
 	
-	unsigned int indices[len];
-	list_to_array (lst, indices, unsigned int);
+	size_t indices[len];
+	list_to_array (lst, (void*)indices, sizeof(size_t));
 	list_free (lst);
 	
 	double s1 = 0.0;
@@ -53,8 +53,8 @@ double pearson (const double* fst, const double* snd, const unsigned int count){
 	double sq2 = 0.0;
 	double sp = 0.0;
 
-	for (unsigned int i = 0; i < len; ++i){
-		const unsigned int k = indices[i];
+	for (size_t i = 0; i < len; ++i){
+		const size_t k = indices[i];
 		s1 += fst[k];
 		sq1 += pow (fst[k], 2.0);
 		s2 += snd[k];

@@ -1,33 +1,51 @@
 #include <stdlib.h>
+#include <mem.h>
 #include "list.h"
 
-List* list_append (List* head){
-	List* tail = malloc (sizeof(List));
-	tail->pnext = NULL;
-	tail->pvalue = NULL;
-	if(head != NULL){		
-		head->pnext = tail;
+List* list_append (List* tail){
+	List* node = (List*) calloc (1, sizeof(List));
+	node->next = NULL;
+	node->value = NULL;
+	if(tail != NULL){		
+		tail->next = node;
 	}
-	return tail;
+	return node;
 }
 
 void list_free (List* head){
 	List* cur = head;
 	while (cur != NULL){
-		List* pnext = cur->pnext;
-		free (cur->pvalue);
+		List* next = cur->next;
+		free (cur->value);
 		free (cur);
-		cur = pnext;
+		cur = next;
 	}
 }
 
-unsigned int list_length (List* head){
-	List* cur = head;
-	unsigned int length	= 0;
-	while (cur != NULL){
-		++length;		
-		cur = cur->pnext;
+size_t list_length (const List* head){
+	if (head != NULL) {
+		List* cur = head->next;
+		size_t length = 1;
+		while (cur != NULL){
+			++length;
+			cur = cur->next;
+		}
+		return length;
 	}
-	return length;
+	else {
+		return 0;	
+	}	
 }
 
+void list_to_array(const List* list, void* array, const size_t size) {
+	if (list != NULL) {
+		memcpy(array, list->value, size);
+		List* cur = list->next;
+		size_t i = 1;
+		while (cur != NULL)	{
+			memcpy(array + size * i, cur->value, size);
+			cur = cur->next;
+			++i;
+		}
+	}
+}

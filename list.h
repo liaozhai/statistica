@@ -1,14 +1,15 @@
 #pragma once
 
+#include <stdlib.h>
+
 struct list_node {
-	void* pvalue;
-	struct list_node* pnext;
+	void* value;
+	struct list_node* next;
 };
 
 typedef struct list_node List;
 
 List* list_append (List* head);
 void list_free (List* head);
-unsigned int list_length(List* head);
-
-#define list_to_array(lst, dst, type) { List* cur = lst; unsigned i = 0; while (cur != NULL) { dst[i++] = *((type*)cur->pvalue); cur = cur->pnext; }}
+size_t list_length(const List* head);
+void list_to_array(const List* list, void* array, const size_t size);

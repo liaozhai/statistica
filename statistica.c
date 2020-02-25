@@ -18,8 +18,9 @@ void test_array (){
 	printf ("test array...\n");
 	const int src[] = {1,2,3,4,5};	
 	const int start = 0;
+	const size_t count = 5;
 	int result;
-	array_fold((void*)src, sizeof (int), 5, (void*)&start, (void*)&result, add_int);
+	array_fold((void*)src, sizeof (int), count, (void*)&start, (void*)&result, add_int);
 	// const int src [] = {1,2,3,4,5};
 	// int start = 0;
 	// array_fold (src, sizeof(src), sizeof (src) / sizeof (int), &start, add);
@@ -28,26 +29,27 @@ void test_array (){
 
 void test_list (){
 	printf ("test list...\n");
-	List* head = NULL;
-	List* tail = NULL;
-	const size_t count = 5;
-	for (size_t i = 0; i < count; ++i){
+	List* tail = NULL;	
+	List* lst = NULL;
+	const unsigned int count = 5;
+	const unsigned int size = sizeof(unsigned int);
+	for (unsigned int i = 0; i < count; ++i){
 		tail = list_append (tail);
-		if (head == NULL) {
-			head = tail;
-		}		
-		tail->pvalue = malloc (sizeof(size_t));
-		*((size_t*)tail->pvalue) = i;
+		if (lst == NULL) {
+			lst = tail;
+		}
+		tail->value = calloc (1, size);
+		*((unsigned int*)tail->value) = i;
 	}
-	const unsigned int len = list_length (head);
+	const unsigned int len = list_length (lst);
 	printf ("list length = %u\n", len);
 	unsigned int dst[len];
-	list_to_array (head, dst, size_t);
+	list_to_array (lst, dst, size);
 	printf ("array of list:\n");
 	for (unsigned int i = 0; i < len; ++i){
 		printf ("dst[%u] = %u\n", i, dst[i]);
 	}
-	list_free (head);
+	list_free (lst);
 }
 
 void test_dist (){
@@ -76,8 +78,8 @@ void test_samples (){
 
 int main(int argc, char** argv) {
 	// gen_samples ("series.txt", 10, 10, 1.0, 5.0);
-	test_array();
-	// test_list();
+	// test_array();
+	test_list();
 	// test_dist();
 	// test_samples();
 	return 0;

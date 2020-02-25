@@ -45,14 +45,14 @@ void gen_samples (const char* file, const unsigned int cols, const unsigned int 
 			if (lst == NULL) {
 				lst = cur;
 			}
-			cur->pvalue = malloc (sizeof (int));
-			*((int*)cur->pvalue) = row[k];
+			cur->value = malloc (sizeof (int));
+			*((int*)cur->value) = row[k];
 		}
 							
-	}
-	size_t count = list_length (lst);
+	}	
+	const size_t count = list_length(lst);	
 	int src[count];
-	list_to_array (lst, src, int);
+	list_to_array (lst, (void*)src, sizeof(int));
 	list_free (lst);
 	double dst[count];
 	normalize (src, dst, count, minscore, maxscore);
@@ -86,13 +86,13 @@ double** read_samples (const char* file, unsigned int* pcols, unsigned int* prow
 			if(lst == NULL){
 				lst = cur;
 			}
-			cur->pvalue = malloc (sizeof(double));
-	        if (strcmp(token, "NAN") == 0) {        	
-	        	*((double*)cur->pvalue) = NAN;
+			cur->value = malloc (sizeof(double));
+	        if (strcmp(token, "NAN") == 0) {
+	        	*((double*)cur->value) = NAN;
 			}
 			else {
 				char* end;
-				*((double*)cur->pvalue) = strtod (token, &end);				
+				*((double*)cur->value) = strtod (token, &end);
 			}	
 			token = strtok(NULL, "\t");
 		}		
@@ -104,8 +104,8 @@ double** read_samples (const char* file, unsigned int* pcols, unsigned int* prow
     for (unsigned int i = 0; i < rows; ++i){
     	buf[i] = malloc (sizeof(double) * cols);
     	for (unsigned int j = 0; j < cols; ++j){
-    		buf[i][j] = *((double*)cur->pvalue);
-    		cur = cur->pnext;
+    		buf[i][j] = *((double*)cur->value);
+    		cur = cur->next;
 		}
 	}
     list_free (lst);
