@@ -1,9 +1,11 @@
 #pragma once
 
-#define gen_row(row, count) {for (unsigned int i = 0; i < count; ++i) { row[i] = rand (); }}
+#include <stdlib.h>
 
-void print_row (const double row[], const unsigned int count);
+#define gen_row(row, count) {for (size_t i = 0; i < count; ++i) { row[i] = rand (); }}
+
+void print_row (const float row[], const size_t count);
 int cmp (const void* a, const void* b);
-void normalize(const int src[], double dst[], const size_t count, const double minscore, const double maxscore);
-void gen_samples (const char* file, const unsigned int cols, const unsigned int rows, double minscore, double maxscore);
-double** read_samples (const char* file, unsigned int* pcols, unsigned int* prows);
+void normalize(const int src[], float dst[], const size_t count, const float minscore, const float maxscore);
+void gen_samples (const char* file, const size_t cols, const size_t rows, float minscore, float maxscore);
+float** read_samples (const char* file, size_t* pcols, size_t* prows);

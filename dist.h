@@ -2,5 +2,5 @@
 
 #include <stdlib.h>
 
-double dist (const double* fst, const double* snd, const size_t count);
-double pearson (const double* fst, const double* snd, const size_t count);
+float dist (const float* fst, const float* snd, const size_t count);
+float pearson (const float* fst, const float* snd, const size_t count);

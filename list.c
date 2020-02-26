@@ -5,7 +5,7 @@
 List* list_append (List* tail){
 	List* node = (List*) calloc (1, sizeof(List));
 	node->next = NULL;
-	node->value = NULL;
+	node->value = NULL;	
 	if(tail != NULL){		
 		tail->next = node;
 	}
@@ -37,13 +37,13 @@ size_t list_length (const List* head){
 	}	
 }
 
-void list_to_array(const List* list, void* array, const size_t size) {
+void list_to_array(const List* list, void* array) {
 	if (list != NULL) {
-		memcpy(array, list->value, size);
+		memcpy(array, list->value, list->size);
 		List* cur = list->next;
 		size_t i = 1;
 		while (cur != NULL)	{
-			memcpy(array + size * i, cur->value, size);
+			memcpy(array + cur->size * i, cur->value, cur->size);
 			cur = cur->next;
 			++i;
 		}
