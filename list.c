@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <mem.h>
+#include <string.h>
 #include "list.h"
 
 List* list_append (List* tail){
