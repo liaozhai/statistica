@@ -1,8 +1,8 @@
 CC = gcc
-CFLAGS = -g -std=gnu11 -Wall
-LDFLAGS = -lm
+CFLAGS = -Wall -std=c11 -g
+OBJS = statistica.o samples.o str.o list.o dist.o array.o
 
-statistica: array.o list.o str.o dist.o samples.o statistica.o
+statistica : $(OBJS) -lm	
 
 clean:
-	rm *.o
+	rm -f statistica *.o

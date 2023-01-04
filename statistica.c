@@ -21,6 +21,7 @@ void test_array (){
 	const size_t count = 5;
 	int result;
 	array_fold((void*)src, sizeof (int), count, (void*)&start, (void*)&result, add_int);	
+	printf("result = %d\n", result);
 }
 
 void test_list (){
@@ -39,12 +40,12 @@ void test_list (){
 		*((size_t*)tail->value) = i;
 	}
 	const size_t len = list_length (lst);
-	printf ("list length = %Iu\n", len);
+	printf ("list length = %lu\n", len);
 	size_t dst[len];
 	list_to_array (lst, dst);
 	printf ("array of list:\n");
 	for (size_t i = 0; i < len; ++i){
-		printf ("dst[%Iu] = %Iu\n", i, dst[i]);
+		printf ("dst[%lu] = %lu\n", i, dst[i]);
 	}
 	list_free (lst);
 }
@@ -59,18 +60,23 @@ void test_dist (){
 }
 
 void test_samples (){	
-	size_t cols, rows;
-	const float fst[] = {0.30,2.95,0.46,3.99,2.00,1.77,0.69,4.02,3.25,3.75};
-	float** snd = read_samples ("series.txt", &cols, &rows);
+	size_t cols = 10, rows = 10;
+	const float fst[] = {0.30,2.95,0.46,3.99,2.00,1.77,0.69,4.02,3.25,3.75};	
+	float snd[rows][cols];
+	read_samples ("series.txt", cols, rows, snd);
+	printf("Samples\n");
+	for (size_t i = 0; i < rows; ++i) {
+		print_row(snd[i], cols);
+		printf("\n");
+	}
 	
 	printf ("#\tEucl\tPearson\n");
 	for (size_t i = 0; i < rows; ++i){
 		const float d = dist(fst, snd[i], cols);
 		const float p = pearson(fst, snd[i], cols);
-		printf ("%Iu\t%.2f\t%.2f\n", i, d, p);
+		printf ("%lu\t%.2f\t%.2f\n", i, d, p);
 	}
-	
-	free (snd);
+		
 }
 
 int main(int argc, char** argv) {

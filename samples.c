@@ -71,49 +71,28 @@ void gen_samples (const char* file, const size_t cols, const size_t rows, const 
 	fclose (fs);
 }
 
-float** read_samples (const char* file, size_t* pcols, size_t* prows) {
+void read_samples (const char* file, size_t cols, size_t rows, float mat[rows][cols]) {
 	FILE* fp = fopen (file, "r+");	
-	char line[BUFFER_SIZE];
-	List* lst = NULL;	
-	List* cur = NULL;
-	size_t rows = 0;
-	size_t cols = 0;
+	char line[BUFFER_SIZE];	
+	size_t i = 0;
 	while (fgets(line, BUFFER_SIZE, fp) != NULL) {				
 		size_t n;
 		if (index_of(line, 0, '\n', &n) && n >= 0) {
 			line[n] = '\0';
 		}
-		char** tokens = tokenize(line, '\t', &cols);
-		float* values = (float*) calloc(cols, sizeof (float));
-		for (size_t i = 0; i < cols; ++i) {
+		char** tokens = tokenize(line, '\t', &cols);		
+		for (size_t j = 0; j < cols; ++j) {
 			if (strcmp(tokens[i], "NAN") == 0) {
-	        	values[i] = NAN;
+	        	mat[i][j] = NAN;
 			}
 			else {
 				char* e;
-				values[i] = strtof(tokens[i], &e);
+				mat[i][j] = strtof(tokens[j], &e);
 			}
-			free(tokens[i]);
+			free(tokens[j]);
 		}
 		free(tokens);
-
-		cur = list_append (cur);
-		if(lst == NULL){
-			lst = cur;
-		}
-		cur->value = values;
-		cur->size = cols;
-		++rows;
+		++i;		
     }    
-    float** buf = calloc (rows, sizeof(float*));
-    cur = lst;
-    for (size_t i = 0; i < rows; ++i){
-    	buf[i] = cur->value;    	
-		cur = cur->next;
-	}
-    list_free (lst);
-	fclose (fp);
-	*prows = rows;
-	*pcols = cols;
-	return buf;
+	fclose (fp);	
 }
