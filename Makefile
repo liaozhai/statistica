@@ -1,8 +1,7 @@
 CC = gcc
-CFLAGS = -g -std=gnu11 -Wall
-LDFLAGS = -lm
+CFLAGS = -g -std=c11 -Wall
 
-statistica: array.o list.o str.o dist.o samples.o statistica.o
+statistica: dist.o statistica.o -lm
 
 clean:
-	rm *.o
+	rm statistica *.o

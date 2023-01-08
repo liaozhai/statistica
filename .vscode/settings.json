@@ -2,6 +2,10 @@
     "files.associations": {
         "stdio.h": "c",
         "string.h": "c",
-        "statistica.h": "c"
+        "statistica.h": "c",
+        "test_samples.h": "c",
+        "stdlib.h": "c",
+        "type_traits": "c",
+        "dist.h": "c"
     }
 }
