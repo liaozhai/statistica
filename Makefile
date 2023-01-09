@@ -1,7 +1,9 @@
 CC = gcc
-CFLAGS = -g -std=c11 -Wall
+CFLAGS = -Wall -g -std=c11
+LDFLAGS = -lm
 
-statistica: dist.o statistica.o -lm
+statistica: statistica.o dist.o
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 clean:
 	rm statistica *.o
