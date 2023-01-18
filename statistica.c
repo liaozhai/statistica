@@ -5,8 +5,8 @@
 
 #define BUFFER_SIZE 1024
 
-void read_samples (const char* file, const size_t cols, const size_t rows, float mat[rows][cols]);
-void read_samples (const char* file, size_t cols, size_t rows, float mat[rows][cols]) {
+void read_samples (const char* file, size_t cols, float mat[][cols]);
+void read_samples (const char* file, size_t cols, float mat[][cols]) {
 	FILE* fp = fopen (file, "r+");
 	char line[BUFFER_SIZE];
 	size_t i = 0;
@@ -28,9 +28,9 @@ void read_samples (const char* file, size_t cols, size_t rows, float mat[rows][c
 int main(void) {
 	size_t cols = 10;
 	size_t rows = 10;
-	const float fst[] = {0.30,2.95,0.46,3.99,2.00,1.77,0.69,4.02,3.25,3.75};
+	const float fst[] = {2.80,3.45,3.94,0.66,1.38,0.54,3.94,3.16,1.16,3.78};
 	float snd[rows][cols];
-	read_samples ("series.txt", cols, rows, snd);
+	read_samples ("series.txt", cols, snd);
 
 	printf ("#\tEucl\tPearson\n");
 	for (size_t i = 0; i < rows; ++i){
@@ -38,5 +38,6 @@ int main(void) {
 		const float p = pearson(cols, fst, snd[i]);
 		printf ("%lu\t%.2f\t%.2f\n", i, d, p);
 	}
+
 	return EXIT_SUCCESS;
 }
