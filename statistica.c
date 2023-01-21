@@ -3,7 +3,7 @@
 #include <string.h>
 #include "dist.h"
 
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 256
 
 void read_samples (const char* file, size_t cols, float mat[][cols]);
 void read_samples (const char* file, size_t cols, float mat[][cols]) {
